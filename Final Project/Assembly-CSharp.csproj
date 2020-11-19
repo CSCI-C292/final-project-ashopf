@@ -36,7 +36,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\BlueCarMovement.cs" />
+     <Compile Include="Assets\Scripts\Goal.cs" />
      <Compile Include="Assets\Scripts\RedCarMovement.cs" />
      <None Include="Assets\Sprites\Spritesheet\sheet_charactersEquipment.xml" />
      <None Include="Assets\Sprites\Spritesheets\spritesheet_objects.xml" />
