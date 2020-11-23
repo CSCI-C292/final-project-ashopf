@@ -17,8 +17,12 @@ public class Ball : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.tag == "Goal"){
-        Debug.Log("GOOOOOAAAAAALLLL!!!!!!!!");
+        GameManager gM = GameObject.FindObjectOfType<GameManager>();
+        if(other.tag == "LeftGoal"){
+            gM.IncreaseScore("left");
+        }
+        if(other.tag == "RightGoal"){
+            gM.IncreaseScore("right");
         }
     }
 }
