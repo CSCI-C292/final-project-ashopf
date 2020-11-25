@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
@@ -9,12 +10,14 @@ public class GameManager : MonoBehaviour
     private int rightPlayerScore;
     private int roundTime = 20;
     private float startTime = 0;
-    private bool roundActive = false;
+    public bool roundActive = false;
     [SerializeField] private TextMeshProUGUI leftScoreText;
     [SerializeField] private TextMeshProUGUI rightScoreText;
     [SerializeField] private TextMeshProUGUI roundTimeText;
-    [SerializeField] private TextMeshProUGUI leftWinText;
-    [SerializeField] private TextMeshProUGUI rightWinText;
+    [SerializeField] private GameObject leftWinText;
+    [SerializeField] private GameObject rightWinText;
+    [SerializeField] private GameObject restartButton;
+    [SerializeField] private GameObject tiedGameText;
     public int LeftPlayerScore{
         get{
             return leftPlayerScore;
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
             this.rightScoreText.text = value.ToString();
         }
     }
+
     
     void Start(){
         leftPlayerScore = 0;
@@ -42,6 +46,11 @@ public class GameManager : MonoBehaviour
         startTime = Time.time;
         setTimeDisplay(roundTime);
         roundActive = true;
+        leftWinText.SetActive(false);
+        rightWinText.SetActive(false);
+        restartButton.SetActive(false);
+        tiedGameText.SetActive(false);
+
     }
 
     void Update(){
@@ -52,11 +61,16 @@ public class GameManager : MonoBehaviour
         else{
             setTimeDisplay(0);
             if(LeftPlayerScore > RightPlayerScore){
-                leftWinText.enabled = true;
-            }else{
-                rightWinText.enabled = true;
+                leftWinText.SetActive(true);
+            }
+            if(RightPlayerScore > LeftPlayerScore){
+                rightWinText.SetActive(true);
+            }
+            if(LeftPlayerScore == RightPlayerScore){
+                tiedGameText.SetActive(true);
             }
             roundActive = false;
+            restartButton.SetActive(true);
         }
     }
 
@@ -67,12 +81,20 @@ public class GameManager : MonoBehaviour
     private string roundTimeDisplay(float time){
         int secondsToShow = Mathf.CeilToInt(time);
         int seconds = secondsToShow % 60;
-        string secondsDisplay = (seconds < 10) ? "0" + seconds.ToString() : seconds.ToString();
+        string secondsDisplay = "0";
+        if(seconds < 10){
+            secondsDisplay = "0" + seconds.ToString();
+        }else{
+             secondsDisplay = seconds.ToString();
+        }
         int minutes = (secondsToShow - seconds)/60;
-        return minutes.ToString() + " : " + seconds.ToString();
+        return minutes.ToString() + " : " + secondsDisplay;
     }
 
     public void IncreaseScore(string goal){
+        BlueCar blueCar = GameObject.FindObjectOfType<BlueCar>();
+        RedCar redCar = GameObject.FindObjectOfType<RedCar>();
+        Ball ball = GameObject.FindObjectOfType<Ball>();
         if(roundActive){
             if(goal.Equals("left")){
                 LeftPlayerScore++;
@@ -80,8 +102,14 @@ public class GameManager : MonoBehaviour
             if(goal.Equals("right")){
                 RightPlayerScore++;
             }
+            blueCar.returnToStartPos();
+            redCar.returnToStartPos();
+            ball.returnToStartPos();
         }
     }
 
-
+    public void NewGame(){
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
