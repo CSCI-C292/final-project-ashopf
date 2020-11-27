@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private int leftPlayerScore;
     private int rightPlayerScore;
-    private int roundTime = 20;
+    [SerializeField] private int roundTime;
     private float startTime = 0;
     public bool roundActive = false;
     [SerializeField] private TextMeshProUGUI leftScoreText;
