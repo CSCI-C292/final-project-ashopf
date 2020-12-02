@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerateForce: 200
-  turningForce: 3
+  turningForce: 2
   boostAccelerateForce: 400
