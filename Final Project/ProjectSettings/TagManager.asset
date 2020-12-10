@@ -6,7 +6,13 @@ TagManager:
   tags:
   - LeftGoal
   - RightGoal
-  - Boost
+  - BlueCar
+  - RedCar
+  - Ball
+  - Bullet
+  - Wall
+  - BlueBullet
+  - RedBullet
   layers:
   - Default
   - TransparentFX

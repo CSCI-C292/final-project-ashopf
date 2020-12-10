@@ -14,6 +14,9 @@ public class Ball : MonoBehaviour
     }
 
     // Update is called once per frame
+    //Checks if the round is over, and if that is true, 
+    //then we return the ball back to the starting position so it cannot accidentally score a goal
+
     void Update()
     {
         GameManager gM = GameObject.FindObjectOfType<GameManager>();
@@ -22,19 +25,22 @@ public class Ball : MonoBehaviour
         }
     }
 
+    //Whenever the ball collides with either the left or right goal we want to increase the score
     private void OnTriggerEnter2D(Collider2D other){
         GameManager gM = GameObject.FindObjectOfType<GameManager>();
         if(other.tag == "LeftGoal"){
-            gM.IncreaseScore("right");
+            StartCoroutine(gM.IncreaseScore("right"));
         }
         if(other.tag == "RightGoal"){
-            gM.IncreaseScore("left");
+            StartCoroutine(gM.IncreaseScore("left"));
         }
     }
 
+    //returns the ball back to the starting position
     public void returnToStartPos(){
         transform.position = startPos;
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
     }
+    
 }

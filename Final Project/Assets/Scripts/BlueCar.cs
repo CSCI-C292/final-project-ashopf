@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BlueCar : MonoBehaviour
 {
@@ -19,10 +20,27 @@ public class BlueCar : MonoBehaviour
     private float direction;
     private Quaternion carStartDirection;
     private bool isCarBoosting;
-    private float carBoostLevel;
+    public float carBoostLevel;
     private float carBoostRate = 5;
+    private Vector3 startPos;  
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI boostText;
+    private int health;
 
-    private Vector3 startPos;
+    public int Health{
+        get{
+            return health;
+        }
+        set{
+            this.health = value;
+            healthText.text = "Health: " + value.ToString();
+            if(health <= 0){
+                this.health = 0;
+                healthText.text = "Health: " + value.ToString();
+                returnToStartPos();
+            }
+        }
+    }
 
     // Start is called before the first frame update
     public void Start()
@@ -33,6 +51,7 @@ public class BlueCar : MonoBehaviour
         carBoostLevel = 0;
         isCarBoosting = false;
         startAccelerateForce = AccelerateForce;
+        Health = 100;
     }
     public void FixedUpdate()
     {
@@ -41,8 +60,11 @@ public class BlueCar : MonoBehaviour
 
     public void Update(){
         carBoost();
+        boostText.text = "Boost: " + Mathf.CeilToInt(carBoostLevel).ToString();
     }
 
+    //Alexander Zotov on Youtube is responsible for creating the movement in carController()
+    //https://www.youtube.com/watch?v=Od_f6Y_OfYI&feature=emb_logo
     private void carController(){
         GameManager gM = GameObject.FindObjectOfType<GameManager>();
         if(gM.roundActive){
@@ -55,13 +77,14 @@ public class BlueCar : MonoBehaviour
         }
     }
 
+    //carBoost() checks if the player is holding the left shift key and if they have boost available we set our normal acceleration to the 
+    //boostAccelerateForce to increase our car speed.
     private void carBoost(){
         if(Input.GetKey("left shift") && carBoostLevel > 0){
             isCarBoosting = true;
             if(isCarBoosting == true){
                 accelerateForce = boostAccelerateForce;
                 carBoostLevel -= carBoostRate * Time.deltaTime;
-                Debug.Log(carBoostLevel);
             }
         }else{
             isCarBoosting = false;
@@ -73,14 +96,8 @@ public class BlueCar : MonoBehaviour
         }
         
     }
-    private void OnTriggerEnter2D(Collider2D other){
-        GameManager gM = GameObject.FindObjectOfType<GameManager>();
-        if(other.tag == "Boost"){
-            carBoostLevel = 100;
-        }
-    }
 
-
+    //returnToStartPos() is what handles the respawning for the blue car whenever it runs out of health or a goal is scored.
     public void returnToStartPos(){
         transform.position = startPos;
         transform.rotation = carStartDirection;
@@ -88,5 +105,7 @@ public class BlueCar : MonoBehaviour
         rb.angularVelocity = 0f;
         isCarBoosting = false;
         carBoostLevel = 0;
+        Health = 100;
     }
+     
 }

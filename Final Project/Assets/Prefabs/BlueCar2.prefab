@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2942937817400220674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7988186960709106629}
+  - component: {fileID: 403352319931219610}
+  m_Layer: 0
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7988186960709106629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942937817400220674}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.434, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6400944554508940418}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &403352319931219610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942937817400220674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb65614298e78e4dad7ac7f881cfa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Projectile: {fileID: 5834836053222384909, guid: 36cc72e02a35ba34fb58be29c591d4bb,
+    type: 3}
+  fireRate: 10
+  lastBulletFired: 1
 --- !u!1 &8204078662344019275
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +62,7 @@ GameObject:
   - component: {fileID: -6272421937017233570}
   m_Layer: 0
   m_Name: BlueCar2
-  m_TagString: Untagged
+  m_TagString: BlueCar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,13 +74,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8204078662344019275}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.034, y: -0.066, z: 0}
   m_LocalScale: {x: 0.23, y: 0.25, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7988186960709106629}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4213094877945340840
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -118,7 +166,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.002265215, y: 1.0494711}
+  m_Offset: {x: 0.011981726, y: 1.1114457}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.43}
@@ -129,7 +177,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.9768424, y: 4.80039}
+  m_Size: {x: 2.9051428, y: 4.605352}
   m_EdgeRadius: 0
 --- !u!114 &-6272421937017233570
 MonoBehaviour:
@@ -144,5 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerateForce: 200
-  turningForce: 3
+  turningForce: 2.5
   boostAccelerateForce: 400
+  carBoostLevel: 0
+  healthText: {fileID: 0}

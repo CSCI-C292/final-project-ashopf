@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject rightWinText;
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject tiedGameText;
+    [SerializeField] private GameObject endGameBackground;
+    public bool destroyAllBullets;
     public int LeftPlayerScore{
         get{
             return leftPlayerScore;
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
         set{
             
             this.leftPlayerScore = value;
-            this.leftScoreText.text = value.ToString();
+            this.leftScoreText.text = (value/2).ToString();
         }
     }
     public int RightPlayerScore{
@@ -35,7 +37,8 @@ public class GameManager : MonoBehaviour
         set{
             
             this.rightPlayerScore = value;
-            this.rightScoreText.text = value.ToString();
+            ;
+            this.rightScoreText.text = (value/2).ToString();
         }
     }
 
@@ -50,9 +53,14 @@ public class GameManager : MonoBehaviour
         rightWinText.SetActive(false);
         restartButton.SetActive(false);
         tiedGameText.SetActive(false);
+        endGameBackground.SetActive(false);
+        destroyAllBullets = false;
 
     }
 
+    //Alex Hart on Youtube is responsible for creating the if statement involving the time, 
+    //but not setting the win conditions or tie active depending on the score
+    //https://www.youtube.com/watch?v=CYNSY7U1kIM
     void Update(){
         if(Time.time - startTime < roundTime){
             float timeElapsed = Time.time - startTime;
@@ -62,22 +70,30 @@ public class GameManager : MonoBehaviour
             setTimeDisplay(0);
             if(LeftPlayerScore > RightPlayerScore){
                 leftWinText.SetActive(true);
+                endGameBackground.SetActive(true);
             }
             if(RightPlayerScore > LeftPlayerScore){
                 rightWinText.SetActive(true);
+                endGameBackground.SetActive(true);
             }
             if(LeftPlayerScore == RightPlayerScore){
                 tiedGameText.SetActive(true);
+                endGameBackground.SetActive(true);
             }
             roundActive = false;
             restartButton.SetActive(true);
         }
+        Debug.Log(destroyAllBullets);
     }
 
+    //Alex Hart on Youtube is responsible for creating the setTimeDisplay()
+    //https://www.youtube.com/watch?v=CYNSY7U1kIM
     private void setTimeDisplay(float timeDisplay){
         roundTimeText.text = roundTimeDisplay(timeDisplay);
     }
 
+    //Alex Hart on Youtube is responsible for creating the roundTimeDisplay()
+    //https://www.youtube.com/watch?v=CYNSY7U1kIM
     private string roundTimeDisplay(float time){
         int secondsToShow = Mathf.CeilToInt(time);
         int seconds = secondsToShow % 60;
@@ -87,25 +103,32 @@ public class GameManager : MonoBehaviour
         }else{
              secondsDisplay = seconds.ToString();
         }
-        int minutes = (secondsToShow - seconds)/60;
+        int minutes = (secondsToShow - seconds) / 60;
         return minutes.ToString() + " : " + secondsDisplay;
     }
 
-    public void IncreaseScore(string goal){
+    //Increases the score depending on which goal the ball hit.
+    public IEnumerator IncreaseScore(string goal){
         BlueCar blueCar = GameObject.FindObjectOfType<BlueCar>();
         RedCar redCar = GameObject.FindObjectOfType<RedCar>();
         Ball ball = GameObject.FindObjectOfType<Ball>();
         if(roundActive){
             if(goal.Equals("left")){
-                LeftPlayerScore++;
+                LeftPlayerScore = leftPlayerScore + 1;
+                destroyAllBullets = true;
+                Debug.Log("left scored a point");
             }
             if(goal.Equals("right")){
-                RightPlayerScore++;
+                RightPlayerScore = rightPlayerScore + 1;
+                destroyAllBullets = true;
+                Debug.Log("right scored a point");
             }
             blueCar.returnToStartPos();
             redCar.returnToStartPos();
             ball.returnToStartPos();
         }
+        yield return new WaitForSeconds(0.5f);
+        destroyAllBullets = false;
     }
 
     public void NewGame(){

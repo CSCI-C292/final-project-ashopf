@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5210161205034540775}
   - component: {fileID: 5210161205034540772}
   - component: {fileID: -4995695773725570942}
+  - component: {fileID: 5157327525139819411}
   - component: {fileID: 8568055475158435148}
   - component: {fileID: 6077650789560113041}
   m_Layer: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5210161205034540773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.19, y: -0.14, z: 0}
+  m_LocalPosition: {x: 0.216, y: -0.14, z: 0}
   m_LocalScale: {x: 0.12336131, y: 0.12779106, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,9 +98,25 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.085494, y: 1.1164143}
+  m_Offset: {x: 0.033736467, y: 0.03713937}
   serializedVersion: 2
-  m_Radius: 6.4326406
+  m_Radius: 6.1676474
+--- !u!58 &5157327525139819411
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210161205034540773}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.06842961, y: 0.08177135}
+  serializedVersion: 2
+  m_Radius: 6.174529
 --- !u!50 &8568055475158435148
 Rigidbody2D:
   serializedVersion: 4
